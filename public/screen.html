@@ -19,7 +19,7 @@
 
       socket.on("energyUpdate", (energy) => {
         counter.textContent = `Энергия: ${energy}`;
-        let stage = Math.min(Math.floor(energy / 10), 4) + 1;
+        let stage = Math.min(Math.floor(energy / 50), 4) + 1;
         city.src = `images/city_${stage}.png`;
       });
     </script>
