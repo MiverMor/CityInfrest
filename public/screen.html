@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Город Инфрест</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="screen">
+    <img id="cityImage" src="images/city_1_dark.png" class="city" />
+    <div class="overlay">
+      <h2 id="energyCounter">Энергия: 0</h2>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const city = document.getElementById("cityImage");
+      const counter = document.getElementById("energyCounter");
+
+      socket.on("energyUpdate", (energy) => {
+        counter.textContent = `Энергия: ${energy}`;
+        let stage = Math.min(Math.floor(energy / 10), 4) + 1;
+        city.src = `images/city_${stage}.png`;
+      });
+    </script>
+  </body>
+</html>

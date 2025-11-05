@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Инфрест — Передай энергию!</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="join">
+  <div class="container">
+    <h1>🌆 Передай энергию городу Инфрест!</h1>
+    <button id="giveEnergy">⚡ Передать энергию</button>
+    <p>Каждое нажатие приближает рассвет 🌟</p>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const button = document.getElementById('giveEnergy');
+    button.onclick = () => {
+      socket.emit('giveEnergy');
+      button.disabled = true;
+      button.textContent = "Спасибо!";
+      setTimeout(() => {
+        button.disabled = false;
+        button.textContent = "⚡ Передать энергию";
+      }, 2000);
+    };
+  </script>
+</body>
+</html>
