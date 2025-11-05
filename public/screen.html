@@ -3,43 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <title>Город Инфрест</title>
-    <style>
-      body {
-        margin: 0;
-        background: black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: opacity 1s ease-in-out;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <img id="city" src="city0.jpg" alt="Город Инфрест" />
+  <body class="screen">
+    <img id="cityImage" src="images/city_1_dark.png" class="city" />
+    <div class="overlay">
+      <h2 id="energyCounter">Энергия: 0</h2>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
-      const cityImg = document.getElementById("city");
+      const city = document.getElementById("cityImage");
+      const counter = document.getElementById("energyCounter");
 
       socket.on("energyUpdate", (energy) => {
-        let stage = 0;
-        if (energy > 20) stage = 1;
-        if (energy > 40) stage = 2;
-        if (energy > 60) stage = 3;
-        if (energy > 80) stage = 4;
-
-        cityImg.style.opacity = 0;
-        setTimeout(() => {
-          cityImg.src = `images/city_${stage}.png`;
-          cityImg.style.opacity = 1;
-        }, 500);
+        counter.textContent = `Энергия: ${energy}`;
+        let stage = Math.min(Math.floor(energy / 10), 4) + 1;
+        city.src = `images/city_${stage}.png`;
       });
     </script>
   </body>
