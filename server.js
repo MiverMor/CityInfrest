@@ -6,25 +6,31 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(express.static('public'));
+const PORT = process.env.PORT || 3000;
 
-let energyLevel = 0;
+app.use(express.static(__dirname + '/public'));
+
+let energyLevel = 0; // 0–100, определяет, какой уровень города показать
 
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  // Отправляем текущее состояние городу на экране
+  // При подключении отправляем текущее состояние
   socket.emit('energyUpdate', energyLevel);
 
-  // При получении клика
+  // Когда пользователь "даёт энергию"
   socket.on('giveEnergy', () => {
     energyLevel++;
+    if (energyLevel > 100) energyLevel = 100;
     io.emit('energyUpdate', energyLevel);
     console.log(`Energy increased: ${energyLevel}`);
   });
 
-  socket.on('disconnect', () => console.log('A user disconnected'));
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
 });
 
-const PORT = 3000;
-server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+server.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
