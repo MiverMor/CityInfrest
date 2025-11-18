@@ -34,6 +34,7 @@ button:hover {
   height: 100vh;
   object-fit: cover;
   transition: opacity 1s ease;
+  position: absolute;
 }
 
 .overlay {
@@ -43,4 +44,8 @@ button:hover {
   right: 0;
   text-align: center;
   font-size: 2em;
+}
+
+.video {
+  display: none;
 }

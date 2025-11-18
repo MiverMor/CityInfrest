@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
   // Когда пользователь "даёт энергию"
   socket.on('giveEnergy', () => {
     energyLevel++;
-    if (energyLevel > 200) energyLevel = 200;
+    if (energyLevel > 250) energyLevel = 250;
     io.emit('energyUpdate', energyLevel);
     console.log(`Energy increased: ${energyLevel}`);
   });
